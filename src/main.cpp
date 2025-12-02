@@ -37,8 +37,7 @@ void setup() {
     // increase laser pulse periods (defaults are 14 and 10 PCLKs)
     myTOF.setVcselPulsePeriod(VL53L0X::VcselPeriodPreRange, 18);
     myTOF.setVcselPulsePeriod(VL53L0X::VcselPeriodFinalRange, 14);
-  
-
+    
   //animation de la lumière au démarrage
   Pixel = CRGB(255, 0, 0);
   FastLED.show();
