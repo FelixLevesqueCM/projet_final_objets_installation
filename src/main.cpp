@@ -31,6 +31,7 @@ void setup() {
   Serial.begin(115200);
   monChronoDepart = millis();
   myPbHub.setPixelCount( CANAL_KEY , 1);
+  FastLED.addLeds<WS2812, PIXEL , GRB>(&Pixel, 1);
 
   //animation de la lumière au démarrage
   Pixel = CRGB(255, 0, 0);
