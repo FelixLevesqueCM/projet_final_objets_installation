@@ -14,10 +14,12 @@ MicroOscSlip <128> monOsc(& Serial);
 
 #include <FastLED.h>
 CRGB Pixel;
+CRGB keyPixel;
 #define PIXEL 27
 
 #define CANAL_KEY 0
 #define CANAL_ANGLE 1
+#define BROCHE_ATOM_FIL_JAUNE 26
 
 unsigned long monChronoDepart ;
 
@@ -31,8 +33,12 @@ void setup() {
   Serial.begin(115200);
   monChronoDepart = millis();
   myPbHub.setPixelCount( CANAL_KEY , 1);
-  FastLED.addLeds<WS2812, PIXEL , GRB>(&Pixel, 1);
-
+  FastLED.addLeds< WS2812, BROCHE_ATOM_FIL_JAUNE , GRB >(&keyPixel, 1); 
+  //distance 
+    myTOF.setSignalRateLimit(0.1);
+    myTOF.setVcselPulsePeriod(VL53L0X::VcselPeriodPreRange, 18);
+    myTOF.setVcselPulsePeriod(VL53L0X::VcselPeriodFinalRange, 14);
+    
   //animation de la lumière au démarrage
   Pixel = CRGB(255, 0, 0);
   FastLED.show();
@@ -84,5 +90,10 @@ void loop() {
     //tof
     uint16_t mesure = myTOF.readRangeSingleMillimeters();
     monOsc.sendInt( "/tof" ,mesure);
+    if (maLectureKey == 0) {
+      myPbHub.setPixelColor(CANAL_KEY, 0, 150, 200, 255);
+    } else {
+      myPbHub.setPixelColor(CANAL_KEY, 0, 0, 0, 0);
+    }
   }
 }
